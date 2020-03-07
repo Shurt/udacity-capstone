@@ -1,28 +1,25 @@
 import os
 from sqlalchemy import Column, String, Integer
+from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_wtf.csrf import CSRFProtect
+from flask_cors import CORS
 import sys
 import json
-from app import *
 from config import *
 
-
-db = SQLAlchemy()
-
-def db_init(app):
-    app.config.from_object('config')
-    db.app = app
-    db.init_app(app)
-    migrate = Migrate(app, db)
-    db.create_all()
+csrf = CSRFProtect()
+app = Flask(__name__)
+csrf.init_app(app)
+CORS(app)
+app.config.from_object('config')
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 def reset_db():
     db.drop_all()
     db.create_all()
-
-# Uncomment this to reset the DB.
-# reset_db()
 
 class Movie(db.Model):
     __tablename__ = 'movies'
@@ -70,3 +67,6 @@ class Actor(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+
+# Uncomment this to reset the DB.
+#reset_db()
