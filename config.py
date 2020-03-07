@@ -4,8 +4,8 @@ Use the below variables to configure the application's connection to the databas
 
 '''
 
-DB_NAME = 'casting-agency'
-DB_HOST_PORT = 'localhost:5433'
+DB_NAME = 'de4k836bjguseh'
+DB_HOST_PORT = 'mpvwhcgkpupddl:22e71eefb483b3f60547e23ce2f13b579ce875d0e0a5ec01211c3080553043f5@ec2-52-203-160-194.compute-1.amazonaws.com:5432/'
 DB_USER = "capstone"
 DB_PASS = "test123"
 
