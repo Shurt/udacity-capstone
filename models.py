@@ -70,4 +70,4 @@ class Actor(db.Model):
         db.session.commit()
 
 # Uncomment this to reset the DB.
-#reset_db()
+reset_db()
