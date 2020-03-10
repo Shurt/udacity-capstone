@@ -12,7 +12,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     setup_db(app)
     # Set up cors and allow '*' for origins
-    CORS(app, resources={r"/api/*": {"origins": "*"}})
+    CORS(app, resources={r"/*": {"origins": "*"}})
 
     @app.after_request
     def after_request(response):
