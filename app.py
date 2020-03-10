@@ -34,7 +34,7 @@ def create_app(test_config=None):
     # Handle GET requests for all available movies.
     @app.route('/api/movies')
     @cross_origin()
-    @requires_auth('view:movies')
+    @requires_auth('get:movies')
     def get_all_movies(jwt):
         movies = Movie.query.all()
         print(movies)
@@ -149,7 +149,7 @@ def create_app(test_config=None):
     # Handle GET requests for all available actors.
     @app.route('/api/actors')
     @cross_origin()
-    @requires_auth('view:actors')
+    @requires_auth('get:actors')
     def get_all_actors(jwt):
         actors = Actor.query.all()
         try:
