@@ -1,8 +1,3 @@
-# Capstone Backend
-
-## Motivation
-Capstone is a project that models a company that is responsible for creating movies, managing and assigning actors to those movies. I am an Executive Producer within the company and I am creating a system to simplify and streamline my process.
-
 ## Getting Started
 
 ### Installing Dependencies
@@ -33,12 +28,13 @@ This will install all of the required packages we selected within the `requireme
 
 ## Database Setup
 
-Create a database `capstone` and `capstone_test` for development and test respectively.
-With Postgres running, restore a database for both using the capstone.psql file provided. From the root folder in terminal run:
+If operating locally, you can use the following command to restore an initial database to get started:
 
 ```bash
-psql capstone < capstone.psql
+psql [YOUR DATABASE NAME] < capstone_init_db.psql
 ```
+
+If operating off of the Heroku server, this is not necessary.
 
 ## Running the server
 
@@ -49,7 +45,6 @@ Each time you open a new terminal session, run:
 ```bash
 export FLASK_APP=app.py
 export FLASK_ENV=development
-flask run --reload
 ```
 
 To run the server, execute:
@@ -62,25 +57,22 @@ The `--reload` flag will detect file changes and restart the server automaticall
 
 ## Testing
 
-Run tests with the `python app_test.py` command
+Run unit tests with `python app_test.py`
 
-You can also test the endpoints with [Postman](https://getpostman.com) by importing the postman collection `capstone.postman_collection.json`. Each folder in the collection represents the various roles. Some variables have been defined for the collection like so;
+The API endpoints can be tested using [Postman](https://getpostman.com). A Postman collection is included, which can be imported into Postman.
 
-- `{{url}}` variable is the localhost url
-- `{{remote}}` variable is the link to the live application at [capstone-app-backend](https://capstone-app-backend.herokuapp.com/api)
+# API Documentation:
 
-## Resources
-- Documentation can be found [here](https://documenter.getpostman.com/view/7418457/SzKQwzQQ)
-- Generate access tokens using this [url](https://capstone-app.auth0.com/authorize?audience=auth&response_type=token&client_id=tqFImTSXfAfSu1mNq9kqnUuhGrHKs1lr&redirect_uri=http://localhost:8000/home) and the account details provided below
+### /movies:
+* Endpoint: '/api/movies'
+* Arguments: None
+* Method: 'GET'
+* Authentication: Casting Assistant, Casting Director, Executive Producer
+* Returns: Status 200, list of movies
 
-- There are 3 accounts set up already for each personnel;
-
-```bash
-assistant@gmail.com
-director@gmail.com
-producer@gmail.com
-```
-
-```bash
-use 'capstone_2020' as password for all accounts
-```
+### /actors:
+* Endpoint: '/api/actors'
+* Arguments: None
+* Method: 'GET'
+* Authentication: Casting Assistant, Casting Director, Executive Producer
+* Returns: Status 200, list of actors

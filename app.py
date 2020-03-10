@@ -6,12 +6,12 @@ from flask_cors import CORS, cross_origin
 from database.models import db_drop_and_create_all, setup_db, Movie, Actor
 from authentication.auth import AuthError, requires_auth
 
+# API documentation is available in README.md
 
 def create_app(test_config=None):
-    # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     setup_db(app)
-    # Set up cors and allow '*' for origins
+    # Setting up CORS.
     CORS(app, resources={r"/api/*": {"origins": "*"}})
 
     @app.after_request
@@ -23,170 +23,85 @@ def create_app(test_config=None):
         return response
 
     '''
-    uncomment the following line to initialize the datbase
-    !! NOTE THIS WILL DROP ALL RECORDS AND START YOUR DB FROM SCRATCH
-    !! NOTE THIS MUST BE UNCOMMENTED ON FIRST RUN
+      The below function call will reset the database.
     '''
     # db_drop_and_create_all()
 
-    # MOVIE ROUTES
-
-    # Handle GET requests for all available movies.
     @app.route('/api/movies')
     @cross_origin()
     @requires_auth('get:movies')
-    def get_all_movies(jwt):
+    def get_movies(jwt):
         movies = Movie.query.all()
-        print(movies)
+        
         try:
-            movies = [movie.format() for movie in movies]
+            all_movies = [movie.format() for movie in movies]
 
             return jsonify({
                 'success': True,
-                'movies': movies
+                'movies': all_movies
             }), 200
         except Exception:
             abort(500)
 
-    # Handle endpoint to POST a new movie
+    @app.route('/api/actors')
+    @cross_origin()
+    @requires_auth('get:actors')
+    def get_actors(jwt):
+        actors = Actor.query.all()
+        try:
+            all_actors = [actor.format() for actor in actors]
+
+            return jsonify({
+                'success': True,
+                'actors': all_actors
+            }), 200
+        except Exception:
+            abort(500)
+
     @app.route('/api/movies', methods=['POST'])
     @cross_origin()
     @requires_auth('post:movies')
-    def post_movie(jwt):
-        # Declare and empty data dictionary to hold all retrieved variables
-        data = request.get_json()
+    def new_movie(jwt):
+        movie_data = request.get_json()
 
-        # set movie variable equal to corresponding model class,
-        # ready for adding to the session
-        movie = data.get('movie')
+        movie = movie_data.get('movie')
 
         movie = Movie(
-            title=data.get('title'),
-            release_date=data.get('release_date')
+            title=movie_data.get('title'),
+            release_date=movie_data.get('release_date')
         )
 
         try:
             movie.insert()
+
+            movies = Movie.query.all()
+            movies = [movie.format() for movie in movies]
+
+            return jsonify({
+                'success': True,
+                'movies': movies
+            }), 200
         except Exception:
             abort(400)
 
-        movies = Movie.query.all()
-        try:
-            movies = [movie.format() for movie in movies]
-
-            return jsonify({
-                'success': True,
-                'movies': movies
-            }), 200
-        except Exception:
-            abort(500)
-
-    # Handle endpoint to PATCH an existing movie
-    @app.route('/api/movies/<int:id>', methods=['PATCH'])
-    @cross_origin()
-    @requires_auth('patch:movies')
-    def patch_movie(jwt, id):
-        movie = Movie.query.filter(Movie.id == id).one_or_none()
-
-        if movie is None:
-            abort(404)
-
-        # Declare and empty data dictionary to hold all retrieved variables
-        data = request.get_json()
-
-        # set movie variable equal to corresponding model class,
-        # ready for adding to the session
-
-        title = data.get('title')
-        release_date = data.get('release_date')
-
-        try:
-            movie.title = title
-            movie.release_date = release_date
-            movie.update()
-        except Exception:
-            abort(422)
-
-        movies = Movie.query.all()
-        try:
-            movies = [movie.format() for movie in movies]
-
-            return jsonify({
-                'success': True,
-                'movies': movies
-            }), 200
-        except Exception:
-            abort(500)
-
-    # Handle endpoint to DELETE an existing movie
-    @app.route('/api/movies/<int:id>', methods=['DELETE'])
-    @cross_origin()
-    @requires_auth('delete:movies')
-    def delete_movie(jwt, id):
-        movie = Movie.query.filter(Movie.id == id).one_or_none()
-
-        if movie is None:
-            abort(404)
-
-        try:
-            movie.delete()
-        except Exception:
-            abort(422)
-
-        movies = Movie.query.all()
-        try:
-            movies = [movie.format() for movie in movies]
-
-            return jsonify({
-                'success': True,
-                'movies': movies
-            }), 200
-        except Exception:
-            abort(500)
-
-    # ACTOR ROUTES
-
-    # Handle GET requests for all available actors.
-    @app.route('/api/actors')
-    @cross_origin()
-    @requires_auth('get:actors')
-    def get_all_actors(jwt):
-        actors = Actor.query.all()
-        try:
-            actor = [actor.format() for actor in actors]
-
-            return jsonify({
-                'success': True,
-                'actors': actor
-            }), 200
-        except Exception:
-            abort(500)
-
-    # Handle endpoint to POST a new actor
     @app.route('/api/actors', methods=['POST'])
     @cross_origin()
     @requires_auth('post:actors')
     def post_actor(jwt):
-        # Declare and empty data dictionary to hold all retrieved variables
-        data = request.get_json()
+        actor_data = request.get_json()
 
-        # set actor variable equal to corresponding model class,
-        # ready for adding to the session
-        actor = data.get('actor')
+        actor = actor_data.get('actor')
 
         actor = Actor(
-            name=data.get('name'),
-            age=data.get('age'),
-            gender=data.get('gender')
+            name=actor_data.get('name'),
+            age=actor_data.get('age'),
+            gender=actor_data.get('gender')
         )
 
         try:
             actor.insert()
-        except Exception:
-            abort(400)
 
-        actors = Actor.query.all()
-        try:
+            actors = Actor.query.all()
             actors = [actor.format() for actor in actors]
 
             return jsonify({
@@ -194,38 +109,59 @@ def create_app(test_config=None):
                 'actors': actors
             }), 200
         except Exception:
-            abort(500)
+            abort(400)
 
-    # Handle endpoint to PATCH an existing actor
+    @app.route('/api/movies/<int:id>', methods=['PATCH'])
+    @cross_origin()
+    @requires_auth('patch:movies')
+    def patch_movie(jwt, id):
+        movie = Movie.query.filter(Movie.id == id)
+
+        if movie is None:
+            abort(404)
+
+        new_movie_data = request.get_json()
+
+        title = new_movie_data.get('title')
+        release_date = new_movie_data.get('release_date')
+
+        try:
+            movie.title = title
+            movie.release_date = release_date
+            movie.update()
+
+            movies = Movie.query.all()
+            movies = [movie.format() for movie in movies]
+
+            return jsonify({
+                'success': True,
+                'movies': movies
+            }), 200
+        except Exception:
+            abort(422)
+
     @app.route('/api/actors/<int:id>', methods=['PATCH'])
     @cross_origin()
     @requires_auth('patch:actors')
     def patch_actor(jwt, id):
-        actor = Actor.query.filter(Actor.id == id).one_or_none()
+        actor = Actor.query.filter(Actor.id == id)
 
         if actor is None:
             abort(404)
 
-        # Declare and empty data dictionary to hold all retrieved variables
-        data = request.get_json()
+        new_actor_data = request.get_json()
 
-        # set actor variable equal to corresponding model class,
-        # ready for adding to the session
-
-        name = data.get('name')
-        age = data.get('age')
-        gender = data.get('gender')
+        name = new_actor_data.get('name')
+        age = new_actor_data.get('age')
+        gender = new_actor_data.get('gender')
 
         try:
             actor.name = name
             actor.age = age
             actor.gender = gender
             actor.update()
-        except Exception:
-            abort(422)
 
-        actors = Actor.query.all()
-        try:
+            actors = Actor.query.all()
             actors = [actor.format() for actor in actors]
 
             return jsonify({
@@ -233,25 +169,43 @@ def create_app(test_config=None):
                 'actors': actors
             }), 200
         except Exception:
-            abort(500)
+            abort(422)
 
-    # Handle endpoint to DELETE an existing actor
+    @app.route('/api/movies/<int:id>', methods=['DELETE'])
+    @cross_origin()
+    @requires_auth('delete:movies')
+    def delete_movie(jwt, id):
+        movie = Movie.query.filter(Movie.id == id)
+
+        if movie is None:
+            abort(404)
+
+        try:
+            movie.delete()
+
+            movies = Movie.query.all()
+            movies = [movie.format() for movie in movies]
+
+            return jsonify({
+                'success': True,
+                'movies': movies
+            }), 200
+        except Exception:
+            abort(422)
+
     @app.route('/api/actors/<int:id>', methods=['DELETE'])
     @cross_origin()
     @requires_auth('delete:actors')
     def delete_actor(jwt, id):
-        actor = Actor.query.filter(Actor.id == id).one_or_none()
+        actor = Actor.query.filter(Actor.id == id)
 
         if actor is None:
             abort(404)
 
         try:
             actor.delete()
-        except Exception:
-            abort(422)
 
-        actors = Actor.query.all()
-        try:
+            actors = Actor.query.all()
             actors = [actor.format() for actor in actors]
 
             return jsonify({
@@ -259,25 +213,9 @@ def create_app(test_config=None):
                 'actors': actors
             }), 200
         except Exception:
-            abort(500)
+            abort(422)
 
-    # Error Handling
-    @app.errorhandler(422)
-    def unprocessable_req(error):
-        return jsonify({
-            "success": False,
-            "error": 422,
-            "message": "unprocessable request"
-        }), 422
-
-    @app.errorhandler(404)
-    def notfound(error):
-        return jsonify({
-            "success": False,
-            "error": 404,
-            "message": "resource not found"
-        }), 404
-
+    # All available error handlers:
     @app.errorhandler(400)
     def failed_req(error):
         return jsonify({
@@ -286,7 +224,6 @@ def create_app(test_config=None):
             "message": "request failed"
         }), 400
 
-    # handle unauthorized client error
     @app.errorhandler(AuthError)
     def unauthorized_request(error):
         return jsonify({
@@ -295,7 +232,6 @@ def create_app(test_config=None):
             "message": "Unauthorized client error",
         }), 401
 
-    # handle unauthorized client error
     @app.errorhandler(401)
     def unauthorized_req(error):
         return jsonify({
@@ -304,7 +240,6 @@ def create_app(test_config=None):
             "message": "Unauthorized client error",
         }), 401
 
-    # handle forbidden errors
     @app.errorhandler(403)
     def forbidden_req(error):
         return jsonify({
@@ -313,7 +248,22 @@ def create_app(test_config=None):
             "message": "Forbidden request. Please contact your administrator.",
         }), 403
 
-    # handle server errors
+    @app.errorhandler(404)
+    def notfound(error):
+        return jsonify({
+            "success": False,
+            "error": 404,
+            "message": "resource not found"
+        }), 404
+        
+    @app.errorhandler(422)
+    def unprocessable_req(error):
+        return jsonify({
+            "success": False,
+            "error": 422,
+            "message": "unprocessable request"
+        }), 422
+
     @app.errorhandler(500)
     def server_err(error):
         return jsonify({

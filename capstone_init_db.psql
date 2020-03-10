@@ -124,10 +124,10 @@ ALTER TABLE ONLY public.movies ALTER COLUMN id SET DEFAULT nextval('public.movie
 --
 
 COPY public.actors (id, name, age, gender) FROM stdin;
-1	Philip Newman	16	male
-2	Boris John	17	male
-3	Jane Doe	34	female
-4	Shera Ghom	14	female
+1	Robert Downey	54	male
+2	Chris Evans	38	male
+3	Scarlett Johansson	35	female
+4	Tom Holland	23	male
 \.
 
 
@@ -138,10 +138,10 @@ COPY public.actors (id, name, age, gender) FROM stdin;
 --
 
 COPY public.movies (id, title, release_date) FROM stdin;
-1	Tranformers	3-Dec-2170
-2	Rise of a Hero	1-Aug-2020
-3	Informer	1-Feb-2060
-4	Jail Breaker	5-Jan-2160
+1	Avengers	4-May-2012
+2	Iron Man	2-May-2008
+3	Thor	2-May-2011
+4	Avengers 2	1-May-2015
 \.
 
 
