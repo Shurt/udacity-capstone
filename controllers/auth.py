@@ -6,10 +6,9 @@ from urllib.request import urlopen
 
 
 #   TODO
-AUTH0_DOMAIN = 'udacity-capstone.auth0.com'
+AUTH0_DOMAIN = 'capstone-app.auth0.com'
 ALGORITHMS = ['RS256']
-API_AUDIENCE = 'udacity-capstone'
-CLIENT_ID = '01FyP6UAoNkj0ecDPd4q6acM4FPlU1RI'
+API_AUDIENCE = 'auth'
 
 # AuthError Exception
 '''
