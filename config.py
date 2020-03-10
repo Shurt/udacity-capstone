@@ -6,12 +6,6 @@ Use the below variables to configure the application's connection to the databas
 '''
 
 SECRET_KEY = os.urandom(32)
-
-DB_NAME = 'de4k836bjguseh'
-DB_HOST_PORT = 'ec2-52-203-160-194.compute-1.amazonaws.com:5432/'
-DB_USER = "capstone"
-DB_PASS = "test123"
-
 DEBUG = True
 
 '''

@@ -1,22 +1,26 @@
 import os
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from models import app, Movie, Actor
 from auth import AuthError, requires_auth
 
-@app.route('/movies', methods=['GET'])
+@app.route('/movies')
+@cross_origin()
 @requires_auth('get:movies')
 def get_movies(jwt):
       movies = Movie.query.all()
+      print(movies)
+      try:
+            movies = [movie.format() for movie in movies]
 
-      if len(movies) <= 0:
-            abort(404)
+            return jsonify({
+                  'success': True,
+                  'movies': movies
+            }), 200
       
-      return jsonify({
-      'success': True,
-      'movies': movies
-      }), 200
+      except Exception:
+            abort(500)
 
 @app.route('/actors', methods=['GET'])
 @requires_auth('get:actors')
