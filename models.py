@@ -71,4 +71,4 @@ class Actor(db.Model):
 
 # Uncomment this to reset the DB.
 #reset_db()
-db.create_all()
+#db.create_all()
