@@ -85,7 +85,7 @@ def create_app(test_config=None):
                 'movies': movies
             }), 200
         except Exception:
-            abort(400)
+            abort(500)
 
     @app.route('/api/actors', methods=['POST'])
     @cross_origin()
