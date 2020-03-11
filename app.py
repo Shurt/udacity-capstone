@@ -73,6 +73,8 @@ def create_app(test_config=None):
             release_date=movie_data.get('release_date')
         )
 
+        print(json.dumps(movie), file=sys.stdout)
+
         try:
             movie.insert()
         except:
