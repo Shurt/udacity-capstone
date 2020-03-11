@@ -1,4 +1,5 @@
 import os
+import sys
 from sqlalchemy import Column, String, Integer, create_engine
 from flask_sqlalchemy import SQLAlchemy
 import json
@@ -28,7 +29,7 @@ class Movie(db.Model):
         self.release_date = release_date
 
     def insert(self):
-        print(self, file=sys.stderr)
+        print(self, file=sys.stdout)
         db.session.add(self)
         db.session.commit()
 
