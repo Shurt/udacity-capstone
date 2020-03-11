@@ -63,8 +63,9 @@ def create_app(test_config=None):
     @requires_auth('post:movies')
     def new_movie(jwt):
         movie_data = request.get_json()
+        print(json.dumps(movie_data), file=sys.stdout)
 
-        movie = movie_data.get('movie')
+        #movie = movie_data.get('movie')
 
         movie = Movie(
             title=movie_data.get('title'),
