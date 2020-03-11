@@ -92,8 +92,8 @@ def create_app(test_config=None):
         age = actor_data['age']
         gender = actor_data['gender']
 
-        actor = Actor(name=name, age=age, gender=gender)
-        actor.insert()
+        new_actor = Actor(name=name, age=age, gender=gender)
+        new_actor.insert()
 
         return jsonify({
             'success': True,
