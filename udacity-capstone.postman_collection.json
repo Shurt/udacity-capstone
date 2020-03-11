@@ -14,11 +14,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/actors",
+							"raw": "{{host}}/api/actors",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
 								"actors"
 							]
 						}
@@ -31,16 +32,49 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/movies",
+							"raw": "{{host}}/api/movies",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
 								"movies"
 							]
 						}
 					},
 					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik0wWXpOa05DTkRsRk5qUTJPRGM1T0RrelJrVkRNa1EzUmtKQ1JFWkZSRUpCTWtWQlJESXhPUSJ9.eyJpc3MiOiJodHRwczovL3VkYWNpdHktY2Fwc3RvbmUuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVlNTlmN2ZlOTlkMDg5MGQ1MzBmMDc1MiIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCIsImlhdCI6MTU4MzkxMDAyMCwiZXhwIjoxNTgzOTk2NDIwLCJhenAiOiIwMUZ5UDZVQW9Oa2owZWNEUGQ0cTZhY000RlBsVTFSSSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiXX0.IN4t_6ZqPX-M9Kq0M9GP00f-Rc3Hv6Y7mERHqQw_wzZgpeeHq0EbwMDiUHEoNoWHLjkNyxAnS1tZNNkheuOJHRZLbIlRLk45-J-5mAGN_t3RR7V_8I2keMoCPqK6x0b3lLeDLLGB5RbfSuY0m-HSYazNFT6zy2t4jnsXEOCYsF8Agh2KhzQNEigKnU6_RlSLuAnzra50_nLjnPLVCU4LJT_KyoVQv46ziLgXdXzwtcnQAjh-tVC1XCkIsGo7w-I0H9NtPlW9T6kb3cTwCNetkM3-UoEK0DB_iNxmUvno8OGf4DayRFV2OJkk1aB_tbrTiQkKy4fJGWgfoawYAiUDvw",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "77e5b573-f701-4cba-a505-8c337f57036e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "0d4957b5-5a3b-47a8-8c12-aeddfd11d0fb",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -70,11 +104,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/actors",
+							"raw": "{{host}}/api/actors",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
 								"actors"
 							]
 						}
@@ -191,11 +226,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/actors",
+							"raw": "{{host}}/api/actors",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
 								"actors"
 							]
 						}
@@ -208,16 +244,49 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/movies",
+							"raw": "{{host}}/api/movies",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
 								"movies"
 							]
 						}
 					},
 					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik0wWXpOa05DTkRsRk5qUTJPRGM1T0RrelJrVkRNa1EzUmtKQ1JFWkZSRUpCTWtWQlJESXhPUSJ9.eyJpc3MiOiJodHRwczovL3VkYWNpdHktY2Fwc3RvbmUuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVlNTlmODIzMjMxMThiMGQzY2ZmYzQ4NSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCIsImlhdCI6MTU4MzkxMDA2MiwiZXhwIjoxNTgzOTk2NDYyLCJhenAiOiIwMUZ5UDZVQW9Oa2owZWNEUGQ0cTZhY000RlBsVTFSSSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmFjdG9ycyIsImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIiwicGF0Y2g6YWN0b3JzIiwicGF0Y2g6bW92aWVzIiwicG9zdDphY3RvcnMiXX0.Ntc_BNrKZDSrAnyYTTTkj8gCcczldQhDEX58XuWnM1Q0SShBFJA_5K2sr4waXBNC6E528M-6tyaSp-OPd9YBJIZHYJsQwkEMshfpkE_QfsHR7GlNMzMWSh98ZJle-vx8xaw-9Ay1fSiNUTyQvvvr9Y9an5BcrS-ZkUTVAeq0BNZB2Ofu4PGbSVnqa9uRa4wOOaQmMO1UMt8e9KzgJBVa_W0_wo-R1kdwZe_H4YUM0koPsp-miE4IAwdIYQwo6rHNvOgiuPX0yfWAdqxPwDwa5HtLcA8JcpPY9u2gcRxUFWw_k0490eCNUvnrGf2whLeP4bAfKrHqa4Q4h7sEO1HfUw",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "416d9dfc-1189-428a-89b2-b7b1d232696a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "13bdd544-d575-46a1-9dfa-7e2410e219df",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -448,7 +517,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik0wWXpOa05DTkRsRk5qUTJPRGM1T0RrelJrVkRNa1EzUmtKQ1JFWkZSRUpCTWtWQlJESXhPUSJ9.eyJpc3MiOiJodHRwczovL3VkYWNpdHktY2Fwc3RvbmUuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVlNTlmODMyOTlkMDg5MGQ1MzBmMDc3MSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCIsImlhdCI6MTU4Mzg2ODM5NywiZXhwIjoxNTgzOTU0Nzk3LCJhenAiOiIwMUZ5UDZVQW9Oa2owZWNEUGQ0cTZhY000RlBsVTFSSSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmFjdG9ycyIsImRlbGV0ZTptb3ZpZXMiLCJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyIsInBhdGNoOmFjdG9ycyIsInBhdGNoOm1vdmllcyIsInBvc3Q6YWN0b3JzIiwicG9zdDptb3ZpZXMiXX0.ApjckzaWhctCtcyDfs8zKyb3Wc3mp-gdaK4NVFI3UEjcH5YE1G0Thc7SUZefxcWoEKA1R0u0LujdVXzwmZhrraQbhEnLCPgupCz8QmGIjwS7ktrRgE-uYLxLxXQvoGv_66T7Cxt8JsFaXT6oD9Q_Ng2GyHaQXZCfzKd0Fll__IVNczgP8C-8XCILHKPPOQ-cSU72QQethxhLnT5tzlcDSmCRUvf8wHfMDpOsB3bQKt8DO9wD7esNpEEkcIRhCPL8qrnS09lBd7ZhiaNq2K3FWFN1sjgCkYhb4hZ-vvgBk_GqOTVJKAf_xeJwKfAJjrNIil8YXnO5m7mO5gj54w8ymA",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik0wWXpOa05DTkRsRk5qUTJPRGM1T0RrelJrVkRNa1EzUmtKQ1JFWkZSRUpCTWtWQlJESXhPUSJ9.eyJpc3MiOiJodHRwczovL3VkYWNpdHktY2Fwc3RvbmUuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVlNTlmODMyOTlkMDg5MGQ1MzBmMDc3MSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCIsImlhdCI6MTU4MzkwOTk2OCwiZXhwIjoxNTgzOTk2MzY4LCJhenAiOiIwMUZ5UDZVQW9Oa2owZWNEUGQ0cTZhY000RlBsVTFSSSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmFjdG9ycyIsImRlbGV0ZTptb3ZpZXMiLCJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyIsInBhdGNoOmFjdG9ycyIsInBhdGNoOm1vdmllcyIsInBvc3Q6YWN0b3JzIiwicG9zdDptb3ZpZXMiXX0.BYB6r6M_fDiIiL_GtZTXiDQaGcyKy_CuCQkSoiuhQLVHsPSeVwzKmYfYbCdAj56A0_ZjvlcRdqYRFHBQObEov1haXAGCZvVVv55qSG-WxDqiHJ-Uo6BnP1qiENQXYDWEIwvBHRW_gEb5O3mnMj0vQ43U4iPHBcc1vp54OAkibi8Y4yCqTTA0nJJv_B-fa6oeryEUXKff6a1UB43-6wpx60I0cU_dgxm3YH0r8g911WP-3bzUSJPU26isdbIba0QVcjhPIx4hE6PDqUQRiMn9KiF5WMnc8bT_kYjKOH5YkQXD_BvZP4sYYS7MCpZDV4W7v5mmK0tb3qLDfoiqXGLRyw",
 						"type": "string"
 					}
 				]
@@ -502,13 +571,13 @@
 	],
 	"variable": [
 		{
-			"id": "efd628c5-e299-4588-a70b-5cfe0023984f",
+			"id": "e65adece-9a33-448c-9ea3-cafa3aec3393",
 			"key": "host",
 			"value": "https://udacitycapstone.herokuapp.com/",
 			"type": "string"
 		},
 		{
-			"id": "343c8d16-c2ef-4b69-b110-75fb03972481",
+			"id": "4981edf2-1fb2-4984-8c99-c5b969a217ea",
 			"key": "host",
 			"value": "http://localhost:5000",
 			"type": "string",

@@ -221,7 +221,8 @@ def create_app(test_config=None):
         return jsonify({
             "success": False,
             "error": 400,
-            "message": "request failed"
+            "message": "request failed",
+            "detailed_msg": error
         }), 400
 
     @app.errorhandler(AuthError)
@@ -230,6 +231,7 @@ def create_app(test_config=None):
             "success": False,
             "error": 401,
             "message": "Unauthorized client error",
+            "detailed_msg": error
         }), 401
 
     @app.errorhandler(401)
@@ -238,6 +240,7 @@ def create_app(test_config=None):
             "success": False,
             "error": 401,
             "message": "Unauthorized client error",
+            "detailed_msg": error
         }), 401
 
     @app.errorhandler(403)
@@ -246,6 +249,7 @@ def create_app(test_config=None):
             "success": False,
             "error": 403,
             "message": "Forbidden request. Please contact your administrator.",
+            "detailed_msg": error
         }), 403
 
     @app.errorhandler(404)
@@ -253,7 +257,8 @@ def create_app(test_config=None):
         return jsonify({
             "success": False,
             "error": 404,
-            "message": "resource not found"
+            "message": "resource not found",
+            "detailed_msg": error
         }), 404
         
     @app.errorhandler(422)
@@ -261,7 +266,8 @@ def create_app(test_config=None):
         return jsonify({
             "success": False,
             "error": 422,
-            "message": "unprocessable request"
+            "message": "unprocessable request",
+            "detailed_msg": error
         }), 422
 
     @app.errorhandler(500)
@@ -270,6 +276,7 @@ def create_app(test_config=None):
             "success": False,
             "error": 500,
             "message": "Internal server error.",
+            "detailed_msg": error
         }), 500
 
     return app
