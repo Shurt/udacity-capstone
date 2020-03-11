@@ -28,6 +28,7 @@ class Movie(db.Model):
         self.release_date = release_date
 
     def insert(self):
+        print(self, file=sys.stderr)
         db.session.add(self)
         db.session.commit()
 
