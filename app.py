@@ -73,8 +73,11 @@ def create_app(test_config=None):
 
         try:
             movie.insert()
-
-            movies = Movie.query.all()
+        except:
+            abort(400)
+        
+        movies = Movie.query.all()
+        try:
             movies = [movie.format() for movie in movies]
 
             return jsonify({
@@ -97,7 +100,7 @@ def create_app(test_config=None):
             age=actor_data.get('age'),
             gender=actor_data.get('gender')
         )
-
+        # Problem seems to be here. When executing a POST request, I receive the 400 error.
         try:
             actor.insert()
 
