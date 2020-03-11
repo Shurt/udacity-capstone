@@ -73,12 +73,11 @@ def create_app(test_config=None):
             release_date=movie_data.get('release_date')
         )
 
-        print(json.dumps(movie), file=sys.stdout)
-
         try:
             movie.insert()
-        except:
-            abort(400)
+        except Exception as e:
+            return jsonify(e), 400
+            #abort(400)
         
         movies = Movie.query.all()
         try:
