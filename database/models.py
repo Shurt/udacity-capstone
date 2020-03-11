@@ -2,42 +2,20 @@ import os
 from sqlalchemy import Column, String, Integer, create_engine
 from flask_sqlalchemy import SQLAlchemy
 import json
-from dotenv import load_dotenv
 
-load_dotenv()
-
-database_path = os.getenv('DATABASE_URL')
+db_url = os.getenv('DATABASE_URL')
 
 db = SQLAlchemy()
 
-'''
-setup_db(app)
-    binds a flask application and a SQLAlchemy service
-'''
-
-
-def setup_db(app, database_path=database_path):
-    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+def setup_db(app, db_url=db_url):
+    app.config["SQLALCHEMY_DATABASE_URI"] = db_url
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
 
-
-'''
-db_drop_and_create_all()
-    drops the database tables and starts fresh
-    can be used to initialize a clean database
-    !!NOTE you can change the database_filename
-    variable to have multiple verisons of a database
-'''
-
-
 def db_drop_and_create_all():
     db.drop_all()
     db.create_all()
-
-# Movies with attributes title and release date
-
 
 class Movie(db.Model):
     __tablename__ = 'movies'
@@ -66,9 +44,6 @@ class Movie(db.Model):
             'title': self.title,
             'release_date': self.release_date
         }
-
-# Actors with attributes name, age and gender
-
 
 class Actor(db.Model):
     __tablename__ = 'actors'
