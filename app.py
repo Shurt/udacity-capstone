@@ -4,8 +4,8 @@ from flask import Flask, request, jsonify, abort
 from sqlalchemy import exc
 import json
 from flask_cors import CORS, cross_origin
-from database.models import db_drop_and_create_all, setup_db, Movie, Actor
-from authentication.auth import AuthError, requires_auth
+from .database.models import db_drop_and_create_all, setup_db, Movie, Actor
+from .authentication.auth import AuthError, requires_auth
 
 # API documentation is available in README.md
 
@@ -26,7 +26,7 @@ def create_app(test_config=None):
     '''
       The below function call will reset the database.
     '''
-    # db_drop_and_create_all()
+    #db_drop_and_create_all()
 
     @app.route('/api/movies')
     @cross_origin()
@@ -64,123 +64,101 @@ def create_app(test_config=None):
     @requires_auth('post:movies')
     def new_movie(jwt):
         movie_data = request.get_json()
-        print(json.dumps(movie_data), file=sys.stdout)
 
-        #movie = movie_data.get('movie')
+        if "title" and "release_date" not in movie_data:
+            abort(422)
 
-        movie = Movie(
-            title=movie_data.get('title'),
-            release_date=movie_data.get('release_date')
-        )
+        title = movie_data['title']
+        release_date = movie_data['release_date']
 
-        try:
-            movie.insert()
-        except Exception as e:
-            abort(400)
-        
-        movies = Movie.query.all()
-        try:
-            movies = [movie.format() for movie in movies]
+        new_movie = Movie(title=title, release_date=release_date)
+        new_movie.insert()
 
-            return jsonify({
-                'success': True,
-                'movies': movies
-            }), 200
-        except Exception:
-            abort(500)
+        return jsonify({
+              "success": True,
+              "new_movie": new_movie.format()
+        })
 
     @app.route('/api/actors', methods=['POST'])
     @cross_origin()
     @requires_auth('post:actors')
-    def post_actor(jwt):
+    def new_actor(jwt):
         actor_data = request.get_json()
 
-        actor = actor_data.get('actor')
+        if "name" and "age" and "gender" not in actor_data:
+            abort(422)
 
-        actor = Actor(
-            name=actor_data.get('name'),
-            age=actor_data.get('age'),
-            gender=actor_data.get('gender')
-        )
-        # Problem seems to be here. When executing a POST request, I receive the 400 error.
-        try:
-            actor.insert()
+        name = actor_data['name']
+        age = actor_data['age']
+        gender = actor_data['gender']
 
-            actors = Actor.query.all()
-            actors = [actor.format() for actor in actors]
+        actor = Actor(name=name, age=age, gender=gender)
+        actor.insert()
 
-            return jsonify({
-                'success': True,
-                'actors': actors
-            }), 200
-        except Exception:
-            abort(400)
+        return jsonify({
+            'success': True,
+            'actors': new_actor.format()
+        }), 200
 
-    @app.route('/api/movies/<int:id>', methods=['PATCH'])
+    @app.route('/api/movies/<int:movie_id>', methods=['PATCH'])
     @cross_origin()
     @requires_auth('patch:movies')
-    def patch_movie(jwt, id):
-        movie = Movie.query.filter(Movie.id == id)
+    def patch_movie(jwt, movie_id):
+        movie = Movie.query.get(movie_id)
+        new_movie_data = request.get_json()
 
         if movie is None:
             abort(404)
-
-        new_movie_data = request.get_json()
-
-        title = new_movie_data.get('title')
-        release_date = new_movie_data.get('release_date')
+        
+        if 'title' in new_movie_data:
+            movie.title = new_movie_data['title']
+        
+        if 'release_date' in new_movie_data:
+            movie.release_date = new_movie_data['release_date']
 
         try:
-            movie.title = title
-            movie.release_date = release_date
             movie.update()
-
-            movies = Movie.query.all()
-            movies = [movie.format() for movie in movies]
 
             return jsonify({
                 'success': True,
-                'movies': movies
+                'movie': movie.format()
             }), 200
         except Exception:
             abort(422)
 
-    @app.route('/api/actors/<int:id>', methods=['PATCH'])
+    @app.route('/api/actors/<int:actor_id>', methods=['PATCH'])
     @cross_origin()
     @requires_auth('patch:actors')
-    def patch_actor(jwt, id):
-        actor = Actor.query.filter(Actor.id == id)
+    def patch_actor(jwt, actor_id):
+        actor = Actor.query.get(actor_id)
+        new_actor_data = request.get_json()
 
         if actor is None:
             abort(404)
 
-        new_actor_data = request.get_json()
+        if 'name' in new_actor_data:
+            actor.name = new_actor_data['name']
 
-        name = new_actor_data.get('name')
-        age = new_actor_data.get('age')
-        gender = new_actor_data.get('gender')
+        if 'age' in new_actor_data:
+            actor.age = new_actor_data['age']
 
+        if 'gender' in new_actor_data:
+            actor.gender = new_actor_data['gender']
         try:
-            actor.name = name
-            actor.age = age
-            actor.gender = gender
             actor.update()
-
-            actors = Actor.query.all()
-            actors = [actor.format() for actor in actors]
 
             return jsonify({
                 'success': True,
-                'actors': actors
+                'actors': actor.format()
             }), 200
         except Exception:
             abort(422)
 
-    @app.route('/api/movies/<int:id>', methods=['DELETE'])
+    @app.route('/api/movies/<int:movie_id>', methods=['DELETE'])
     @cross_origin()
     @requires_auth('delete:movies')
-    def delete_movie(jwt, id):
-        movie = Movie.query.filter(Movie.id == id)
+    def delete_movie(jwt, movie_id):
+        movie = Movie.query.get(movie_id)
 
         if movie is None:
             abort(404)
@@ -198,11 +176,11 @@ def create_app(test_config=None):
         except Exception:
             abort(422)
 
-    @app.route('/api/actors/<int:id>', methods=['DELETE'])
+    @app.route('/api/actors/<int:actor_id>', methods=['DELETE'])
     @cross_origin()
     @requires_auth('delete:actors')
-    def delete_actor(jwt, id):
-        actor = Actor.query.filter(Actor.id == id)
+    def delete_actor(jwt, actor_id):
+        actor = Actor.query.get(actor_id)
 
         if actor is None:
             abort(404)

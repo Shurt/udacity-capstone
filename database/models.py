@@ -20,7 +20,7 @@ def db_drop_and_create_all():
 
 class Movie(db.Model):
     __tablename__ = 'movies'
-    id = Column(db.Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String(80), unique=True)
     release_date = Column(String(180), nullable=False)
 
@@ -29,7 +29,6 @@ class Movie(db.Model):
         self.release_date = release_date
 
     def insert(self):
-        print(json.dumps(self), file=sys.stdout)
         db.session.add(self)
         db.session.commit()
 
