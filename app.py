@@ -76,8 +76,7 @@ def create_app(test_config=None):
         try:
             movie.insert()
         except Exception as e:
-            return jsonify(e), 400
-            #abort(400)
+            abort(400)
         
         movies = Movie.query.all()
         try:
