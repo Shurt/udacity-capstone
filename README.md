@@ -1,53 +1,44 @@
-## Getting Started
+# Getting Started
 
-Heroku URL: https://udacitycapstone.herokuapp.com/
+Below are the URLs associated with the project:
 
-### Installing Dependencies
+**Heroku URL: https://udacitycapstone.herokuapp.com/**
+**Auth0 URL: https://udacity-capstone.auth0.com**
 
-#### Python 3.7
+## Project Motivation
 
-Follow instructions to install the latest version of python for your platform in the [python docs](https://docs.python.org/3/using/unix.html#getting-and-installing-the-latest-version-of-python)
+This project serves as the culmination of the Udacity Full-Stack Nanodegree program. I've utilized the suggested 'Casting Agency' project. Through this, I've utilized the following tools/concepts:
+* Database modeling, using SQLAlchemy to interface to the PostgreSQL database.
+* Basic API implemented to perform CRUD operations against the PostgreSQL database.
+* Role-Based access control implemented with Auth0.
+* Project successfully deployed to Heroku.
+* Unit tests (via ```unittest```) and API tests (via [Postman](https://getpostman.com))
 
-#### Virtual Enviornment
+## Local setup
 
-I recommend working within a virtual environment whenever using Python for projects. This keeps your dependencies for each project separate and organaized. Instructions for setting up a virual enviornment for your platform can be found in the [python docs](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
+1) Firstly, clone the repo:
+```bash
+git clone https://github.com/Shurt/udacity-capstone
+cd udacity-capstone
+```
 
-#### PIP Dependencies
+2) Initialize a new virtual environment:
+```bash
+python3 -m venv .env
+source .env/bin/activate
+```
 
-Once you have your virtual environment setup and running, install dependencies by naviging to the root directory and running:
-
+3) Install the dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-This will install all of the required packages we selected within the `requirements.txt` file.
-
-##### Key Dependencies
-
-- [Flask](http://flask.pocoo.org/) is a lightweight backend microservices framework. Flask is required to handle requests and responses.
-
-- [jose](https://python-jose.readthedocs.io/en/latest/) JavaScript Object Signing and Encryption for JWTs. Useful for encoding, decoding, and verifying JWTS.
-
-## Database Setup
-
-If operating locally, you can use the following commands to restore an initial database to get started:
-
+4) Replace the 'user name', 'password', 'database', and 'port' fields in the command below and execute it with bash:
 ```bash
-psql [YOUR DATABASE NAME] < capstone_init_db.psql
-export DATABASE_URL="postgres://[POSTGRES USERNAME HERE]:[POSTGRES PASSWORD HERE]@127.0.0.1:5432/[YOUR DATABASE NAME]"
-export TEST_DB="postgres://[POSTGRES USERNAME HERE]:[POSTGRES PASSWORD HERE]@127.0.0.1:5432/[YOUR DATABASE NAME]"
+psql [DATABASE] < capstone_init_db.psql
+export DATABASE_URL="postgres://[USERNAME]:[PASSWORD]@localhost:[PORT]/[DATABASE]"
+export TEST_DB="postgres://[USERNAME]:[PASSWORD]@localhost:[PORT]/[DEVELOPMENT DATABASE]"
 ```
-
-Alternatively, if you create two empty databases, "capstone_prod" and "capstone_dev", you can run the following script (you must first update the username/password for psql):
-
-```bash
-chmod +x database_setup.sh
-./database_setup.sh
-export DATABASE_URL="postgres://[POSTGRES USERNAME HERE]:[POSTGRES PASSWORD HERE]@127.0.0.1:5432/capstone_prod"
-export TEST_DB="postgres://[POSTGRES USERNAME HERE]:[POSTGRES PASSWORD HERE]@127.0.0.1:5432/capstone_dev"
-```
-
-If operating off of the Heroku server, this is not necessary.
 
 ## Running the server
 
@@ -60,7 +51,7 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-To run the server, execute:
+To run the Flask server, execute:
 
 ```bash
 flask run --reload
@@ -74,7 +65,7 @@ Run unit tests with `python app_test.py`
 
 The API endpoints can be tested using [Postman](https://getpostman.com). A Postman collection is included, which can be imported into Postman.
 
-While testing, you can log in (via Auth0) with the following accounts:
+While testing, you can log in ([via Auth0](udacity-capstone.auth0.com)) with the following accounts:
 casting_asst@shurt.net / Blah123!
 casting_dir@shurt.net / Blah123!
 exec_prod@shurt.net / Blah123!
