@@ -7,7 +7,7 @@ from flask_cors import CORS, cross_origin
 from database.models import db_drop_and_create_all, setup_db, Movie, Actor
 from authentication.auth import AuthError, requires_auth
 
-# API documentation is available in README.md
+# API documentation is available in README.md.
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
